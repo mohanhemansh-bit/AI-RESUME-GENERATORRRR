@@ -10,7 +10,6 @@ AI resume based on high ATS score""")
 
 #=================AAGENT CODE=================
 
-import IPython as ip
 import os
 import time
 import langchain
@@ -74,7 +73,7 @@ def prompt_generator (agent = agent):
     f.write(response.content[-1]['text'])
 
   return "Prompt file generated Successfully, agent can read it"
-
+prompt_generator(model)
 # tool 2:
 def resume_maker_prompt():
   """This function just gives
@@ -82,7 +81,8 @@ def resume_maker_prompt():
   with open('prompt.py', 'r') as f:
     prompt = f.read()
     return prompt
-
+resume_maker_prompt()
+#====================GENERATE RESUME=================
 prompt="""you are a helpful AI assistance
 with job resume maker, your task is to give
 HTML format resume, with proper designing using recent CSS and JS
@@ -99,5 +99,5 @@ if st.button('generate resume'):
     
     response=agent.invoke({'messages':[{'role':'user',"content":query}]})
     code=response['messages'][-1].content[-1]['text']
-    st.markdown(code)
-    
+    #st.markdown(code)
+    st.html(code, widt h= 'streach' , unsafe_allow_javascript=True

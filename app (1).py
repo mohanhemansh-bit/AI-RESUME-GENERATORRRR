@@ -100,4 +100,4 @@ if st.button('generate resume'):
     response=agent.invoke({'messages':[{'role':'user',"content":query}]})
     code=response['messages'][-1].content[-1]['text']
     #st.markdown(code)
-    st.html(code, width= 'strech' , unsafe_allow_javascript=True)
+    st.html(code, width= 'stretch' , unsafe_allow_javascript=True)

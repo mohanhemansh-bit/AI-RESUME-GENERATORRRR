@@ -17,7 +17,7 @@ import numpy as np
 import streamlit as st
 from langchain_community.document_loaders import PyMuPDFLoader
 # api keys
-GOOGLE= st.sidebar.text_input("GEMINI",type="password")
+GOOGLE= st.sidebar.text_input("GOOGLE",type="password")
 GROQ= st.sidebar.text_input("GROQ",type="password")
 TAVILY =st.sidebar.text_input("TAVILY",type="password")
 if not (GOOGLE) and not (GROQ) and not (TAVILY):
@@ -29,7 +29,7 @@ else:
 #====================================================
 model=ChatGoogleGenerativeAI(
     google_api_key=GOOGLE,
-    model='gemini-3.5-flash',
+    model='gemini-3.5-flash-lite',
     temperature=1
 )
 def search_jobs(query):
@@ -126,7 +126,6 @@ if st.button('generate resume'):
             b64_image = base64.b64encode(img_file.read()).decode()
         data_uri = f"data:image/jpeg;base64,{b64_image}"
         code = code.replace("PROFILE_IMAGE_PLACEHOLDER", data_uri)
-
+      
+   
     st.html(code , width="stretch" , unsafe_allow_javascript=True)
-
-    

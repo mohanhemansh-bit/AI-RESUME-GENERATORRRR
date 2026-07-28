@@ -92,9 +92,8 @@ def resume_maker_prompt():
 resume_maker_prompt()
 
 #===================UPLOAD IMAGE===================
-uploaded_file = st.sidebar.file_uploader(
-"Choose an image file",
-type=["jpg", "jpeg", "png", "webp"]
+uploaded_file = st.sidebar.file_uploader("Choose an image file",
+        type=["jpg", "jpeg", "png", "webp"]
 )
 if uploaded_file is not None:
   try:
@@ -107,8 +106,8 @@ if uploaded_file is not None:
 # 3. Save the image to the current working directory
     image.save(save_path, "JPEG")
     st.sidebar.success (f" Image successfully saved as `{save_path}`!")
-    except Exception as e:
-        st.error(f"Error processing image: {e}")
+except Exception as e:
+    st.error(f"Error processing image: {e}")
 #====================GENERATE RESUME=================
 prompt="""you are a helpful AI assistance
 with job resume maker, your task is to give

@@ -29,7 +29,7 @@ else:
 #====================================================
 model=ChatGoogleGenerativeAI(
     google_api_key=GOOGLE,
-    model='gemini-3.5-flash-lite',
+    model='gemini-3.5-flasg',
     temperature=1
 )
 def search_jobs(query):

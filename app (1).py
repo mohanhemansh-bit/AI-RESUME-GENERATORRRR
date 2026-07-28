@@ -22,10 +22,18 @@ from langchain.messages import SystemMessage, HumanMessage
 import numpy as np
 import streamlit as st
 from langchain_community.document_loaders import PyMuPDFLoader
+from PIL import image
 
 GOOGLE_API_KEY=st.sidebar.text_input("GOOGLE_API_KEY",type="password")
 GROQ_API_KEY=st.sidebar.text_input("GROQ_API_KEY",type="password")
 TAVILY_API_KEY=st.sidebar.text_input("TAVILY_API_KEY",type="password")
+
+if not(GOOGLE_KEY_API) and not (GROQ_API_KEY) and not(TAVILY_API_KEY):
+    st.sidebar.warning("PASS API KEYS")
+    st.stop()
+else:
+    st.success("API KEYS LOADED")
+  
 #==============MODEL BUILDING======================
 model = ChatGoogleGenerativeAI (
 model = 'gemini-3.5-flash-lite',
@@ -82,13 +90,42 @@ def resume_maker_prompt():
     prompt = f.read()
     return prompt
 resume_maker_prompt()
+
+#===================UPLOAD IMAGE===================
+uploaded_file = st.sidebar.file_uploader(
+"Choose an image file",
+type=["jpg", "jpeg", "png", "webp"]
+)
+if uploaded_file is not None:
+  try:
+    image = Image.open(uploaded_file)
+    st.sidebar.image(image, caption="Uploaded Image", use_container_width=True)
+    if image.mode in ("RGBA", "P"):
+      image = image.convert("RGB")
+    base_name = os.path.splitext(uploaded_file.name)[0]
+    save_path = f"{base_name}.jpg"
+# 3. Save the image to the current working directory
+    image.save(save_path, "JPEG")
+    st.sidebar.success (f" Image successfully saved as `{save_path}`!")
+except Exception as e:
+    st.error(f"Error processing image: {e}"
 #====================GENERATE RESUME=================
 prompt="""you are a helpful AI assistance
 with job resume maker, your task is to give
 HTML format resume, with proper designing using recent CSS and JS
 code, with professional design format, user will upload data and return
 HTML format resume"""
-final_prompt=prompt+resume_maker_prompt()
+
+final_prompt = prompt + resume_maker_prompt()
+user_info = st.text_input("Enter your information")
+
+user_details = f"""user details: given below:
+Resume info: {user_info}
+Photo: {uploaded_file }
+Photo present in current directory with name as 
+uploaded_file, and once resume generated give
+download button in same html code.
+Default if not given: Give Python Developer Resume"""
 
 user_details="""user details: given below:
 give python developer resume"""
